@@ -18,25 +18,9 @@ export default function Home() {
       <div>
         <h1>Agosto</h1>
         <Resumen/>
-        <div className="ingresos">
-        <h2>Ingresos</h2>
-        <ul>
-          <li>Nomina: </li>
-          <li>Total Ingresos</li>
-        </ul>
-        </div>
-        <div className="gastos_fijos">
-          <h2>Gastos Fijos</h2>
-          <ul>
-            <li>Total Gastos Fijos: </li>
-          </ul>
-        </div>
-        <div className="gastos">
-          <h2>Gastos</h2>
-          <ul>
-            <li>Total Gastos: </li>
-          </ul>
-        </div>
+        
+       
+        
       </div>
     </div>
   );

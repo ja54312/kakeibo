@@ -61,18 +61,19 @@ export default function Ingresos() {
           <button>Enviar</button>
         </form>
       </div>
-      <OperationList context={userContext} type={'ingresos'}/>
+      <OperationList context={userContext} type={"ingresos"} />
+      <Total context={userContext} type={'ingresos'}/>
     </div>
   );
 }
 
 function OperationList(props) {
-  const { context,type } = props;
-  const {user,userData} = context
+  const { context, type } = props;
+  const { user, userData } = context;
 
-  const handleDelete = (e,item) => {
+  const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarIngreso(user.uid,item)
+    BorrarIngreso(user.uid, item);
   };
 
   if (userData[type]) {
@@ -80,11 +81,21 @@ function OperationList(props) {
 
     const list = operaciones.map((item, index) => (
       <li key={index}>
-        {item.nombre} - {item.valor} - {new Date(item.date.seconds * 1000).toDateString()}
-        <button onClick={(e)=>handleDelete(e,item)} id={index}>X</button>
+        {item.nombre} - {item.valor} -{" "}
+        {new Date(item.date.seconds * 1000).toDateString()}
+        <button onClick={(e) => handleDelete(e, item)} id={index}>
+          X
+        </button>
       </li>
     ));
     return <ul>{list}</ul>;
   }
   return null;
-};
+}
+
+function Total(props) {
+  const { context,type } = props;
+  const { userData } = context;
+  const suma = userData[type]?.operaciones.reduce((accum, item)=>accum + parseInt(item.valor),0)
+  return(<p>Total de {type}: {suma}</p>)
+}

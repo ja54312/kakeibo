@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { BorrarGasto, GuardarGasto } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
@@ -143,11 +143,16 @@ function OperationList(props) {
 
 function Total(props) {
   const { context, type } = props;
-  const { userData } = context;
+  const { userData,setTotalGastos } = context;
   const suma = userData[type]?.operaciones.reduce(
     (accum, item) => accum + parseInt(item.valor),
     0
   );
+  
+  useEffect(()=>{
+    setTotalGastos(suma)
+  })
+  
   return (
     <p>
       Total de {type}: {suma}

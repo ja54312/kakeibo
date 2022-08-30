@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext,useEffect } from "react";
 import { BorrarIngreso, GuardarIngreso } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
@@ -62,7 +62,7 @@ export default function Ingresos() {
         </form>
       </div>
       <OperationList context={userContext} type={"ingresos"} />
-      <Total context={userContext} type={'ingresos'}/>
+      <Total context={userContext} type={"ingresos"} />
     </div>
   );
 }
@@ -73,7 +73,7 @@ function OperationList(props) {
 
   const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarIngreso(item,user.uid);
+    BorrarIngreso(item, user.uid);
   };
 
   if (userData[type]) {
@@ -94,8 +94,18 @@ function OperationList(props) {
 }
 
 function Total(props) {
-  const { context,type } = props;
-  const { userData } = context;
-  const suma = userData[type]?.operaciones.reduce((accum, item)=>accum + parseInt(item.valor),0)
-  return(<p>Total de {type}: {suma}</p>)
+  const { context, type } = props;
+  const { userData, totalIngresos, setTotalIngresos } = context;
+  const suma = userData[type]?.operaciones.reduce(
+    (accum, item) => accum + parseInt(item.valor),
+    0
+  );
+  useEffect(() => {
+    setTotalIngresos(suma);
+  });
+  return (
+    <p>
+      Total de {type}: {suma}
+    </p>
+  );
 }

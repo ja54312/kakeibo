@@ -8,6 +8,7 @@ import { auth } from "../lib/firebase";
 export default function Home() {
   const [user] = useAuthState(auth);
 
+
   const nomina = 2230
   const objetivoAhorro = 536.74
   const gastosFijos = 1336.65

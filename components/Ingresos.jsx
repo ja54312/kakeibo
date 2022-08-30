@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { BorrarIngreso, GuardarIngreso, userRef } from "../lib/firebase";
+import { BorrarIngreso, GuardarIngreso } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
 
@@ -33,7 +33,7 @@ export default function Ingresos() {
 
   return (
     <div className="ingresos">
-      <h2>Ingresos</h2>
+      <h1>Ingresos</h1>
       <p onClick={handleShowNuevoIngreso}>
         {!showInput ? "+ Nuevo ingreso " : "Cancelar nuevo ingreso"}
       </p>
@@ -73,7 +73,7 @@ function OperationList(props) {
 
   const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarIngreso(user.uid, item);
+    BorrarIngreso(item,user.uid);
   };
 
   if (userData[type]) {

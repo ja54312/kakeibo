@@ -91,7 +91,7 @@ function OperationList(props) {
 
   const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarGasto(user.uid, item);
+    BorrarGasto(item, user.uid);
   };
 
   const getDate = (date) => new Date(date.date.seconds * 1000).toDateString();

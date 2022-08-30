@@ -80,7 +80,7 @@ function OperationList(props) {
   const getDate = (date) => new Date(date.date.seconds * 1000).toDateString();
 
   if (userData[type]) {
-    const operaciones = userData[type].operaciones;
+    const operaciones = userData[type].operaciones.filter(item=>item.categoria==='fijo');
 
     const getListWithOperations = (operaciones) =>
       operaciones.map((item, index) => (
@@ -94,7 +94,7 @@ function OperationList(props) {
 
     return (
       <>
-        <ul></ul>
+        <ul>{getListWithOperations(operaciones)}</ul>
       </>
     );
   }

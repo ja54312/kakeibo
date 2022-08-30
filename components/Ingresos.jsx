@@ -97,7 +97,7 @@ function Total(props) {
   const { context, type } = props;
   const { userData, totalIngresos, setTotalIngresos } = context;
   const suma = userData[type]?.operaciones.reduce(
-    (accum, item) => accum + parseInt(item.valor),
+    (accum, item) => accum + parseFloat(item.valor),
     0
   );
   useEffect(() => {

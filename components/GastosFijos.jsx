@@ -110,7 +110,7 @@ function Total(props) {
       const SoloFijos = (arr) => arr.filter((item) => item.categoria === "fijo");
       const soloGastosFijos = SoloFijos(userData[type]?.operaciones);
       const suma = soloGastosFijos.reduce(
-        (accum, item) => accum + parseInt(item.valor),
+        (accum, item) => accum + parseFloat(item.valor),
         0
       );
       setTotalGastosFijos(suma);

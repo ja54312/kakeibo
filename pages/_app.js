@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
   const [user] = useAuthState(auth);
   const [userData, setUserData] = useState({});
   const [totalGastos, setTotalGastos] = useState(0);
+  const [totalGastosFijos, setTotalGastosFijos] = useState(0);
   const [totalIngresos, setTotalIngresos] = useState(0);
 
   async function getUserData(uid) {
@@ -37,6 +38,8 @@ function MyApp({ Component, pageProps }) {
         userData,
         totalGastos,
         setTotalGastos,
+        totalGastosFijos,
+        setTotalGastosFijos,
         totalIngresos,
         setTotalIngresos,
       }}

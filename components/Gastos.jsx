@@ -143,19 +143,23 @@ function OperationList(props) {
 
 function Total(props) {
   const { context, type } = props;
-  const { userData,setTotalGastos } = context;
-  const suma = userData[type]?.operaciones.reduce(
-    (accum, item) => accum + parseInt(item.valor),
-    0
-  );
-  
-  useEffect(()=>{
-    setTotalGastos(suma)
-  })
-  
+  const { userData, setTotalGastos,totalGastos } = context;
+
+  useEffect(() => {
+    if (userData[type]?.operaciones) {
+      const NoFijos = (arr) => arr.filter((item) => item.categoria !== "fijo");
+      const soloGastos = NoFijos(userData[type]?.operaciones);
+      const suma = soloGastos.reduce(
+        (accum, item) => accum + parseInt(item.valor),
+        0
+      );
+      setTotalGastos(suma);
+    }
+  });
+
   return (
     <p>
-      Total de {type}: {suma}
+      Total de {type}: {totalGastos}
     </p>
   );
 }

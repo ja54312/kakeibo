@@ -113,7 +113,7 @@ function Total(props) {
         (accum, item) => accum + parseFloat(item.valor),
         0
       );
-      setTotalGastosFijos(suma);
+      setTotalGastosFijos(suma.toFixed(2));
     }
   });
 

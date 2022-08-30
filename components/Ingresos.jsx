@@ -1,4 +1,4 @@
-import { useState, useContext,useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { BorrarIngreso, GuardarIngreso } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
@@ -96,16 +96,19 @@ function OperationList(props) {
 function Total(props) {
   const { context, type } = props;
   const { userData, totalIngresos, setTotalIngresos } = context;
-  const suma = userData[type]?.operaciones.reduce(
-    (accum, item) => accum + parseFloat(item.valor),
-    0
-  );
+
   useEffect(() => {
-    setTotalIngresos(suma);
+    if (userData[type]?.operaciones) {
+      const suma = userData[type]?.operaciones.reduce(
+        (accum, item) => accum + parseFloat(item.valor),
+        0
+      );
+      setTotalIngresos(suma.toFixed(2));
+    }
   });
   return (
     <p>
-      Total de {type}: {suma}
+      Total de {type}: {totalIngresos}
     </p>
   );
 }

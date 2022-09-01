@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { BorrarIngreso, GuardarIngreso, userRef } from "../lib/firebase";
+import { useState, useContext, useEffect } from "react";
+import { BorrarIngreso, GuardarIngreso } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
 
@@ -33,7 +33,7 @@ export default function Ingresos() {
 
   return (
     <div className="ingresos">
-      <h2>Ingresos</h2>
+      <h1>Ingresos</h1>
       <p onClick={handleShowNuevoIngreso}>
         {!showInput ? "+ Nuevo ingreso " : "Cancelar nuevo ingreso"}
       </p>
@@ -62,7 +62,7 @@ export default function Ingresos() {
         </form>
       </div>
       <OperationList context={userContext} type={"ingresos"} />
-      <Total context={userContext} type={'ingresos'}/>
+      <Total context={userContext} type={"ingresos"} />
     </div>
   );
 }
@@ -73,7 +73,7 @@ function OperationList(props) {
 
   const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarIngreso(user.uid, item);
+    BorrarIngreso(item, user.uid);
   };
 
   if (userData[type]) {
@@ -94,8 +94,21 @@ function OperationList(props) {
 }
 
 function Total(props) {
-  const { context,type } = props;
-  const { userData } = context;
-  const suma = userData[type]?.operaciones.reduce((accum, item)=>accum + parseInt(item.valor),0)
-  return(<p>Total de {type}: {suma}</p>)
+  const { context, type } = props;
+  const { userData, totalIngresos, setTotalIngresos } = context;
+
+  useEffect(() => {
+    if (userData[type]?.operaciones) {
+      const suma = userData[type]?.operaciones.reduce(
+        (accum, item) => accum + parseFloat(item.valor),
+        0
+      );
+      setTotalIngresos(suma.toFixed(2));
+    }
+  });
+  return (
+    <p>
+      Total de {type}: {totalIngresos}
+    </p>
+  );
 }

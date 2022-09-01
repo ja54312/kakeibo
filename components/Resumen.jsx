@@ -1,7 +1,11 @@
+import { UserContext } from "../lib/context";
+import { useContext } from "react";
+
 export default function Resumen() {
-  const nomina = 2230;
+  const {totalGastos,totalIngresos, totalGastosFijos} = useContext(UserContext);
+
   const objetivoAhorro = 536.74;
-  const gastosFijos = 1336.65;
+  const gastosFijos = 0;
 
   const Presupuesto = (totalIngresos, objetivoAhorro, gastosFijos) =>
     totalIngresos - objetivoAhorro - gastosFijos;
@@ -10,14 +14,16 @@ export default function Resumen() {
     <>
       <div className="resumen">
         <ul>
+          <li>Total Ingresos: {totalIngresos}</li>
           <li>Objetivo de Ahorro: {objetivoAhorro}</li>
+          <li>Total Gastos Fijos: {totalGastosFijos}</li>
+          <li>Total Gastos: {totalGastos}</li>
           <li>
-            Presupuesto: {Presupuesto(nomina, objetivoAhorro, gastosFijos)}
+            Presupuesto: {Presupuesto(totalIngresos, objetivoAhorro, totalGastosFijos).toFixed(2)}
           </li>
-          <li>Total Gastos: </li>
           <li>
             Balance:{" "}
-            {Balance(Presupuesto(nomina, objetivoAhorro, gastosFijos), 0)}
+            {Balance(Presupuesto(totalIngresos, objetivoAhorro, totalGastosFijos), totalGastos).toFixed(2)}
           </li>
         </ul>
       </div>

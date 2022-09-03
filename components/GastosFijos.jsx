@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { BorrarGasto, GuardarGasto } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
+import dayjs from "dayjs";
 
 export default function GastosFijos() {
   const [showInput, setShowInput] = useState(false);
@@ -26,7 +27,7 @@ export default function GastosFijos() {
 
   const sendNuevoGasto = (e) => {
     e.preventDefault();
-    GuardarGasto({ nombre, valor, categoria:'fijo' }, userContext.user.uid);
+    GuardarGasto({ nombre, valor, categoria: "fijo" }, userContext.user.uid);
     setShowInput(false);
     SetWipe(true);
   };
@@ -70,17 +71,21 @@ export default function GastosFijos() {
 
 function OperationList(props) {
   const { context, type } = props;
-  const { user, userData } = context;
+  const { user, userData,fecha } = context;
 
   const handleDelete = (e, item) => {
     e.preventDefault();
-    BorrarGasto(item,user.uid);
+    BorrarGasto(item, user.uid);
   };
 
   const getDate = (date) => new Date(date.date.seconds * 1000).toDateString();
 
   if (userData[type]) {
-    const operaciones = userData[type].operaciones.filter(item=>item.categoria==='fijo');
+    const operaciones = userData[type].operaciones.filter(
+      (item) =>
+        item.categoria === "fijo" &&
+        dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month()
+    );
 
     const getListWithOperations = (operaciones) =>
       operaciones.map((item, index) => (
@@ -103,12 +108,19 @@ function OperationList(props) {
 
 function Total(props) {
   const { context, type } = props;
-  const { userData, setTotalGastosFijos,totalGastosFijos } = context;
+  const { userData, setTotalGastosFijos, totalGastosFijos, fecha } = context;
+
+  const PorFecha = (arr) =>
+    arr.filter((item) => {
+      return dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month();
+    });
+
+  const SoloFijos = (arr) => arr.filter((item) => item.categoria === "fijo");
 
   useEffect(() => {
     if (userData[type]?.operaciones) {
-      const SoloFijos = (arr) => arr.filter((item) => item.categoria === "fijo");
-      const soloGastosFijos = SoloFijos(userData[type]?.operaciones);
+      const gastosFijosDelMes = PorFecha(userData[type]?.operaciones);
+      const soloGastosFijos = SoloFijos(gastosFijosDelMes);
       const suma = soloGastosFijos.reduce(
         (accum, item) => accum + parseFloat(item.valor),
         0

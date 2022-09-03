@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { BorrarIngreso, GuardarIngreso } from "../lib/firebase";
 import ControlledInput from "./ControlledInput";
 import { UserContext } from "../lib/context";
+import dayjs from "dayjs";
+
 
 export default function Ingresos() {
   const [showInput, setShowInput] = useState(false);
@@ -69,7 +71,7 @@ export default function Ingresos() {
 
 function OperationList(props) {
   const { context, type } = props;
-  const { user, userData } = context;
+  const { user, userData,fecha } = context;
 
   const handleDelete = (e, item) => {
     e.preventDefault();
@@ -77,9 +79,9 @@ function OperationList(props) {
   };
 
   if (userData[type]) {
-    const operaciones = userData[type].operaciones;
+    const ingresosDelMes = userData[type].operaciones.filter(item=>dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month());
 
-    const list = operaciones.map((item, index) => (
+    const list = ingresosDelMes.map((item, index) => (
       <li key={index}>
         {item.nombre} - {item.valor} -{" "}
         {new Date(item.date.seconds * 1000).toDateString()}
@@ -95,11 +97,17 @@ function OperationList(props) {
 
 function Total(props) {
   const { context, type } = props;
-  const { userData, totalIngresos, setTotalIngresos } = context;
+  const { userData, totalIngresos, setTotalIngresos,fecha } = context;
+
+  const PorFecha = (arr) =>
+    arr.filter((item) => {
+      return dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month();
+    });
 
   useEffect(() => {
     if (userData[type]?.operaciones) {
-      const suma = userData[type]?.operaciones.reduce(
+      const ingresosDelMes = PorFecha(userData[type]?.operaciones)
+      const suma = ingresosDelMes.reduce(
         (accum, item) => accum + parseFloat(item.valor),
         0
       );

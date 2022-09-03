@@ -88,7 +88,7 @@ export default function Gastos() {
 
 function OperationList(props) {
   const { context, type } = props;
-  const { user, userData,fecha } = context;
+  const { user, userData, fecha } = context;
 
   const handleDelete = (e, item) => {
     e.preventDefault();
@@ -98,7 +98,11 @@ function OperationList(props) {
   const getDate = (date) => new Date(date.date.seconds * 1000).toDateString();
 
   if (userData[type]) {
-    const operaciones = userData[type].operaciones;
+    const operaciones = userData[type].operaciones.filter(
+      (item) =>
+        dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month() &&
+        dayjs(item.date.seconds * 1000).year() === dayjs(fecha).year()
+    );
 
     const getListWithOperations = (operaciones) =>
       operaciones.map((item, index) => (
@@ -111,7 +115,12 @@ function OperationList(props) {
       ));
 
     const getOperationsByType = (type, array) =>
-      array.filter((item) => item.categoria === type && dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month());
+      array.filter(
+        (item) =>
+          item.categoria === type &&
+          dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month() &&
+          dayjs(item.date.seconds * 1000).year() === dayjs(fecha).year()
+      );
 
     const listaNecesarios = getListWithOperations(
       getOperationsByType("necesario", operaciones)
@@ -144,19 +153,21 @@ function OperationList(props) {
 
 function Total(props) {
   const { context, type } = props;
-  const { userData, setTotalGastos,totalGastos,fecha } = context;
+  const { userData, setTotalGastos, totalGastos, fecha } = context;
 
-  const PorFecha = (arr) => arr.filter((item)=>{
-    return dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month()
-  })
+  const PorFecha = (arr) =>
+    arr.filter((item) => {
+      return (
+        dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month() &&
+        dayjs(item.date.seconds * 1000).year() === dayjs(fecha).year()
+      );
+    });
 
   const NoFijos = (arr) => arr.filter((item) => item.categoria !== "fijo");
 
-
   useEffect(() => {
-
     if (userData[type]?.operaciones) {
-      const gastosDelMes = PorFecha(userData[type]?.operaciones)
+      const gastosDelMes = PorFecha(userData[type]?.operaciones);
       const soloGastos = NoFijos(gastosDelMes);
       const suma = soloGastos.reduce(
         (accum, item) => accum + parseFloat(item.valor),

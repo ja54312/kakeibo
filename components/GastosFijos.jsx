@@ -85,6 +85,7 @@ function OperationList(props) {
       (item) =>
         item.categoria === "fijo" &&
         dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month()
+        && dayjs(item.date.seconds * 1000).year() === dayjs(fecha).year()
     );
 
     const getListWithOperations = (operaciones) =>
@@ -112,7 +113,7 @@ function Total(props) {
 
   const PorFecha = (arr) =>
     arr.filter((item) => {
-      return dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month();
+      return dayjs(item.date.seconds * 1000).month() === dayjs(fecha).month() && dayjs(item.date.seconds * 1000).year() === dayjs(fecha).year()
     });
 
   const SoloFijos = (arr) => arr.filter((item) => item.categoria === "fijo");

@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import Gastos from "../components/Gastos";
-import Logout from '../components/Logout'
+import Logout from "../components/Logout";
 import GastosFijos from "../components/GastosFijos";
 import Ingresos from "../components/Ingresos";
 import Resumen from "../components/Resumen";
@@ -13,10 +13,9 @@ export default function Home() {
   return (
     <div>
       <h1>Welcome {user.email}</h1>
-      <Logout/>
+      <Logout />
       <div>
-        {/* <h1>{new Date().toLocaleDateString("es-ES", { month: "long" })}</h1> */}
-        <Date/>
+        <Date />
         <Resumen />
         <Ingresos />
         <GastosFijos />

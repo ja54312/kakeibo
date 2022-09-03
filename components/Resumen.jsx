@@ -1,15 +1,20 @@
 import { UserContext } from "../lib/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function Resumen() {
   const {totalGastos,totalIngresos, totalGastosFijos} = useContext(UserContext);
+  const[objetivo, setObjetivo] = useState(0)
 
   const objetivoAhorro = 536.74;
-  const gastosFijos = 0;
 
   const Presupuesto = (totalIngresos, objetivoAhorro, gastosFijos) =>
     totalIngresos - objetivoAhorro - gastosFijos;
   const Balance = (presupuesto, totalGastos) => presupuesto - totalGastos;
+
+  const handleClick = (e) =>{
+    e.preventDefault()
+
+  }
   return (
     <>
       <div className="resumen">

@@ -1,4 +1,3 @@
-import { connectStorageEmulator } from "firebase/storage";
 import { useEffect, useState } from "react";
 
 export default function ControlledInput(props) {

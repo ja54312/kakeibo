@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }) {
   const [totalGastos, setTotalGastos] = useState(0);
   const [totalGastosFijos, setTotalGastosFijos] = useState(0);
   const [totalIngresos, setTotalIngresos] = useState(0);
+  const [fecha,setFecha] = useState(null)
 
   async function getUserData(uid) {
     await CreateInitialData(uid);
@@ -42,6 +43,8 @@ function MyApp({ Component, pageProps }) {
         setTotalGastosFijos,
         totalIngresos,
         setTotalIngresos,
+        fecha,
+        setFecha
       }}
     >
       {!user ? <Login /> : <Component {...pageProps} />}

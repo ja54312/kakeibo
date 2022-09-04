@@ -20,7 +20,7 @@
     border-radius: 25px;
 }
 .SocialButtonLoginGoogle{
-    background-color: #f8f8f8;
+    background-color: inherit;
     border: none;
     cursor: pointer;
 }

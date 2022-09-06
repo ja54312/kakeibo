@@ -1,0 +1,26 @@
+.PageContainer{
+    min-width: 320px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: 100%;
+    background-color: var(--fondo-color-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.containerSocialButton{
+    padding: 5px 30px;
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 25px;
+}
+.SocialButtonLoginGoogle{
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}

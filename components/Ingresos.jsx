@@ -119,7 +119,7 @@ function Total(props) {
       );
       setTotalIngresos(suma.toFixed(2));
     }
-  });
+  },[userData[type]?.operaciones]);
   return (
     <p>
       Total de {type}: {totalIngresos}

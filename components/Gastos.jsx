@@ -175,7 +175,7 @@ function Total(props) {
       );
       setTotalGastos(suma.toFixed(2));
     }
-  });
+  },[userData[type]?.operaciones]);
 
   return (
     <p>

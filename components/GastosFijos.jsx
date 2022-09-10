@@ -128,7 +128,7 @@ function Total(props) {
       );
       setTotalGastosFijos(suma.toFixed(2));
     }
-  });
+  },[userData[type]?.operaciones]);
 
   return (
     <p>

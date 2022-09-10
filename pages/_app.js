@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import "../styles/variables.css"
 import { UserContext } from "../lib/context";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
@@ -8,7 +9,7 @@ import {
   userSnapshot,
 } from "../lib/firebase";
 import { useEffect, useState } from "react";
-import Login from "../components/Login";
+import Login from './loginPage';
 
 function MyApp({ Component, pageProps }) {
   const [user] = useAuthState(auth);
@@ -47,7 +48,7 @@ function MyApp({ Component, pageProps }) {
         setFecha
       }}
     >
-      {!user ? <Login /> : <Component {...pageProps} />}
+      {!user ? <Login/> : <Component {...pageProps} />}
     </UserContext.Provider>
   );
 }
